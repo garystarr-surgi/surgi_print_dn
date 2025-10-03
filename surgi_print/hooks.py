@@ -7,5 +7,5 @@ app_license = "MIT"
 
 # Link the client script to the DocType
 doctype_js = {
-    "Delivery Note": "public/js/delivery_note.js"
+    "Delivery Note": "js/delivery_note.js"
 }
