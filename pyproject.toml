@@ -4,11 +4,11 @@ authors = [
     { name = "Gary Starr", email = "gary.starr@SurgiShop.com"}
 ]
 description = "surgi_print"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-    # "frappe~=15.0.0" # Installed and managed by bench.
+    # "frappe~=15.84.0" # Installed and managed by bench.
 ]
 
 [build-system]
