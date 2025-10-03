@@ -1,0 +1,24 @@
+{
+  "name": "surgi_print",
+  "version": "0.0.1",
+  "description": "CUPS direct printing for Delivery Notes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "frappe",
+    "erpnext",
+    "cups",
+    "print"
+  ],
+  "author": "Gary Starr",
+  "license": "MIT",
+  "dependencies": {
+    // Add any third-party JS libraries your app uses here (e.g., "chart.js": "^4.4.3")
+  },
+  "devDependencies": {
+    // Often left blank, or used for tools like Vue/React. 
+    // Frappe's build process usually handles the core dev tools (esbuild, rollup).
+  }
+}
