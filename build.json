@@ -1,6 +1,5 @@
 {
       "js": [
-        "surgi_print/public/js/delivery_note.js"
+        "surgi_print/js/delivery_note.js"
       ]
-}
 }
