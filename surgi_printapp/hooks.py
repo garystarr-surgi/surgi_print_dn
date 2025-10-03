@@ -1,4 +1,4 @@
-app_name = "surgi_print_app"
+app_name = "surgi_print"
 app_title = "Surgi Warehouse Print"
 app_publisher = "Gary Starr"
 app_description = "CUPS direct printing for Delivery Notes."
