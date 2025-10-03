@@ -3,4 +3,5 @@
 *.egg-info
 *.swp
 tags
-surgi_print/docs/current
+node_modules
+__pycache__
