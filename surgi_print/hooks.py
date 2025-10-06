@@ -1,6 +1,6 @@
-app_name = "surgi_print_app"
+app_name = "surgi_print"
 app_title = "Surgi Print App"
-app_publisher = "Your Name"
+app_publisher = "Gary Starr"
 app_description = "CUPS Printing Integration for Delivery Notes"
 app_version = "0.0.1"
 app_license = "mit"
