@@ -9,6 +9,12 @@ app_license = "mit"
 # The path uses the app name: /assets/{app_name}/js/{filename}.js
 app_include_js = "/assets/surgi_print/js/surgi_print.js"
 
+# **DOCYPE-SPECIFIC JAVASCRIPT HOOK (ADDED)**
+# -------------------------------------------
+# Tells Frappe to load 'public/js/delivery_note.js' only when the Delivery Note form is opened.
+doctype_js = {
+	"Delivery Note": "public/js/delivery_note.js"
+
 # Client Script Hook (Optional, but good practice for external scripts)
 # This isn't needed if the script is managed via the UI, but it's part of the standard template.
 # doc_events = {
