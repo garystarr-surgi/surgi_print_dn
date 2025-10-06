@@ -7,7 +7,7 @@ app_license = "mit"
 
 # Register the surgi_print.js file to be loaded across the entire Frappe Desk.
 # The path uses the app name: /assets/{app_name}/js/{filename}.js
-app_include_js = "/assets/surgi_print/js/surgi_print.js"
+app_include_js = "/assets/surgi_print/js/delivery_note.js"
 
 # **DOCYPE-SPECIFIC JAVASCRIPT HOOK (ADDED)**
 # -------------------------------------------
