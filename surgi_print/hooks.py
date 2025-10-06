@@ -5,6 +5,10 @@ app_description = "CUPS Printing Integration for Delivery Notes"
 app_version = "0.0.1"
 app_license = "mit"
 
+# Register the surgi_print.js file to be loaded across the entire Frappe Desk.
+# The path uses the app name: /assets/{app_name}/js/{filename}.js
+app_include_js = "/assets/surgi_print_app/js/surgi_print.js"
+
 # Client Script Hook (Optional, but good practice for external scripts)
 # This isn't needed if the script is managed via the UI, but it's part of the standard template.
 # doc_events = {
