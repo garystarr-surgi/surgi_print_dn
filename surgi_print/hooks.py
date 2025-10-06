@@ -2,7 +2,7 @@ app_name = "surgi_print"
 app_title = "Surgi Print App"
 app_publisher = "Gary Starr"
 app_description = "CUPS Printing Integration for Delivery Notes"
-app_version = "0.0.1"
+app_version = "0.0.5"
 app_license = "mit"
 
 # Register the surgi_print.js file to be loaded across the entire Frappe Desk.
