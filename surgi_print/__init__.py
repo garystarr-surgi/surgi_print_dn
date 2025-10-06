@@ -3,6 +3,6 @@
 from __future__ import unicode_literals
 
 # This line is crucial for bench to find the version.
-__version__ = "0.0.1" 
+__version__ = "0.0.5" 
 
 # Ensure this file is clean of external code like 'setup()'
