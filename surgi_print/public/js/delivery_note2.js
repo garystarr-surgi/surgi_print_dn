@@ -5,7 +5,7 @@ frappe.ui.form.on('Delivery Note', {
     refresh(frm) {
                 
         // 1. FIX: Unconditionally remove the button to handle cancelled (docstatus 2) and duplicates.
-        frm.remove_custom_button(BUTTON_LABEL); 
+        frm.remove_custom_button(Print to Warehouse); 
 
         // 2. Conditionally add the button back only for valid statuses.
         if (frm.doc.docstatus === 0 || frm.doc.docstatus === 1) {
