@@ -3,18 +3,22 @@ console.log("SURGI PRINT SCRIPT LOADING!");
 
 frappe.ui.form.on('Delivery Note', {
     refresh(frm) {
-        const BUTTON_LABEL = __('Print to Warehouse');
-        
+                
         // 1. FIX: Unconditionally remove the button to handle cancelled (docstatus 2) and duplicates.
         frm.remove_custom_button(BUTTON_LABEL); 
 
         // 2. Conditionally add the button back only for valid statuses.
         if (frm.doc.docstatus === 0 || frm.doc.docstatus === 1) {
             
+             // 1. Prevent Duplicates (best practice for 'refresh')
+            frm.remove_custom_button('Print to Warehouse');
+
+            // 2. Add the Custom Button
+            frm.add_custom_button(__('Print to Warehouse'), () => {
+            
             console.log("Docstatus is: " + frm.doc.docstatus + ". Adding button now.");
             
-            frm.add_custom_button(BUTTON_LABEL, () => {
-                
+                      
                 const target_printer = 'Brother 3210';
                 const doc_name = frm.doc.name;
                 
