@@ -13,7 +13,7 @@ build-backend = "setuptools.build_meta"
 name = "surgi-print" # Use the standard hyphenated name convention
 description = "A description of the surgi_print application."
 # Set the version dynamically using git tags/commits
-dynamic = ["version"] 
+dynamic = ["version", "requires-python"] 
 
 # Specify dependencies (add any packages your app needs to run)
 dependencies = [
