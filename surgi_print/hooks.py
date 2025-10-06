@@ -13,14 +13,14 @@ app_include_js = "/assets/surgi_print_app/js/surgi_print.js"
 # This isn't needed if the script is managed via the UI, but it's part of the standard template.
 # doc_events = {
 # 	"Delivery Note": {
-# 		"refresh": "surgi_print_app.client_scripts.delivery_note.refresh"
+# 		"refresh": "surgi_print.client_scripts.delivery_note.refresh"
 # 	}
 # }
 
 # Custom Whitelisted Python Modules
 # The `api.py` file contains whitelisted functions and must be included here
 apis = {
-    "surgi_print_app.api": "surgi_print_app.api"
+    "surgi_print.api": "surgi_print.api"
 }
 
 # Python Requirements
