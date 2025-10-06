@@ -1,6 +1,6 @@
 {
   "name": "surgi_print",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "Custom Frappe/ERPNext app for surgi_print functionality.",
   "private": true,
   "scripts": {
