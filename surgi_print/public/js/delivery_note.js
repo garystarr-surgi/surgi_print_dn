@@ -4,6 +4,7 @@ frappe.ui.form.on('Delivery Note', {
     refresh(frm) {
         // Ensure the button only appears on Draft (0) or Submitted (1) documents
         if (frm.doc.docstatus === 0 || frm.doc.docstatus === 1) {
+            console.log("Docstatus is: " + frm.doc.docstatus + ". Adding button now."); 
             
             // 1. Prevent Duplicates (best practice for 'refresh')
             frm.remove_custom_button('Print to Warehouse');
