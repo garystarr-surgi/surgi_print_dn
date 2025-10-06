@@ -21,3 +21,15 @@ A custom Frappe application designed to integrate Delivery Note printing with a 
 3.  Ensure the underlying host environment has the CUPS client libraries installed, typically required by `pycups`.
 
 ## Configuration
+
+### Server Details
+
+The CUPS server IP and port are **hardcoded** in `surgi_print_app/api.py`. You must modify this file or update the logic to fetch these values from a custom Frappe DocType/Settings.
+
+### Client Script
+
+The Client Script is attached to the **Delivery Note** DocType and triggers the print job with the hardcoded printer name: `'Brother 3210'`.
+
+## Requirements
+
+This app requires the `pycups` Python library, which is specified in `surgi_print_app.txt` and `hooks.py`.
