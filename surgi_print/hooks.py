@@ -1,11 +1,28 @@
-app_name = "surgi_print"
-app_title = "Surgi Warehouse Print"
-app_publisher = "Gary Starr"
-app_description = "CUPS direct printing for Delivery Notes."
-app_email = "gary.starr@surgishop.com"
-app_license = "MIT"
+app_name = "surgi_print_app"
+app_title = "Surgi Print App"
+app_publisher = "Your Name"
+app_description = "CUPS Printing Integration for Delivery Notes"
+app_version = "0.0.1"
+app_license = "mit"
 
-# Link the client script to the DocType
-doctype_js = {
-    "Delivery Note": "js/delivery_note.js"
+# Client Script Hook (Optional, but good practice for external scripts)
+# This isn't needed if the script is managed via the UI, but it's part of the standard template.
+# doc_events = {
+# 	"Delivery Note": {
+# 		"refresh": "surgi_print_app.client_scripts.delivery_note.refresh"
+# 	}
+# }
+
+# Custom Whitelisted Python Modules
+# The `api.py` file contains whitelisted functions and must be included here
+apis = {
+    "surgi_print_app.api": "surgi_print_app.api"
 }
+
+# Python Requirements
+# You must list 'pycups' as a requirement since your code uses it
+# Note: pycups is typically named 'cups' when imported but 'pycups' for installation.
+required_apps = []
+install_requires = [
+    "pycups" 
+]
