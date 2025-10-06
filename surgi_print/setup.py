@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='surgi_print',
-    version='0.0.1',
+    version='0.0.5',
     description='CUPS direct printing for Delivery Notes.',
     author='Gary Starr',
     packages=find_packages(),
