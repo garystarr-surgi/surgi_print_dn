@@ -1,40 +1,37 @@
 import frappe
 import cups
 import os
+# Import for better temporary file handling
+import tempfile 
 
 @frappe.whitelist()
-def send_delivery_note_to_cups(printer_name): # Removed 'name' as a function argument
+# *** CORRECTION 1: Accept 'doc_name' from the client ***
+def send_delivery_note_to_cups(doc_name, printer_name): 
     """
-    Sends a print job of a Delivery Note to the specified CUPS server.
+    Generates a PDF of the specified Delivery Note and sends it to a CUPS printer.
     """
     doctype = "Delivery Note"
-    # *** EDIT: Hardcoded the document name as requested ***
-    name = "Surgi Delivery Note"
     
-    # NOTE: These IP/Port values are specific to the script's logic and must be reachable
-    # from the Frappe Cloud server instance.
-    server_ip = "47.206.233.1" 
+    # NOTE: These IP/Port values should ideally be fetched from a Frappe Setting DocType
+    server_ip = "47.206.233.1"  
     server_port = 631
-    temp_file_path = None 
+    temp_file_path = None # Will store the path of the secure temporary file
 
     try:
-        if not frappe.db.exists(doctype, name):
-             frappe.throw(f"Delivery Note '{name}' not found.")
-             
+        # Check if the document exists
+        if not frappe.db.exists(doctype, doc_name):
+            frappe.throw(f"Delivery Note '{doc_name}' not found.")
+            
         # 1. Generate PDF of the Delivery Note
-        # frappe.get_print is used instead of frappe.get_pdf
-        pdf_file = frappe.get_print(doctype, name, as_pdf=True)
+        pdf_file = frappe.get_print(doctype, doc_name, as_pdf=True)
         
-        # Save PDF to a temporary file
-        temp_dir = frappe.get_site_path("private", "tmp", "print_jobs")
-        frappe.create_folder(temp_dir)
-        temp_file_path = os.path.join(temp_dir, f"{doctype}_{name}.pdf")
-        
-        with open(temp_file_path, "wb") as f:
-            f.write(pdf_file)
+        # *** CORRECTION 2: Use Python's built-in secure tempfile handling ***
+        # Create a named temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+            tmp.write(pdf_file)
+            temp_file_path = tmp.name # Save the path for CUPS and cleanup
 
         # 2. Connect to the CUPS server
-        # *** FIXES: Setting the remote server configuration ***
         cups.setServer(server_ip)
         cups.setPort(server_port)
         conn = cups.Connection()
@@ -45,10 +42,9 @@ def send_delivery_note_to_cups(printer_name): # Removed 'name' as a function arg
             frappe.throw(f"Printer '{printer_name}' not found on CUPS server at {server_ip}.")
             
         # 3. Send the print job
-        # Uses the hardcoded 'name' variable
-        conn.printFile(printer_name, temp_file_path, f"{doctype}: {name}", {})
+        conn.printFile(printer_name, temp_file_path, f"{doctype}: {doc_name}", {})
         
-        frappe.msgprint(f"Print job sent for {name} to printer: {printer_name}")
+        frappe.msgprint(f"Print job sent for {doc_name} to printer: {printer_name}")
         return True
         
     except Exception as e:
@@ -56,6 +52,6 @@ def send_delivery_note_to_cups(printer_name): # Removed 'name' as a function arg
         # Propagate a user-friendly error message
         frappe.throw(f"Printing Delivery Note failed (Check server {server_ip}): {e}")
     finally:
-        # Clean up the temporary file
+        # 4. Clean up the temporary file
         if temp_file_path and os.path.exists(temp_file_path): 
             os.remove(temp_file_path)
