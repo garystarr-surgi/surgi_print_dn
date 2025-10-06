@@ -1,18 +1,14 @@
 // Client Script attached to the DocType: Delivery Note
-// File: public/js/delivery_note.js
-
 frappe.ui.form.on('Delivery Note', {
-    // The 'refresh' event runs every time the form loads or is saved/submitted/cancelled.
     refresh(frm) {
-        const BUTTON_LABEL = __('Print to Warehouse');
-        
-        // 1. Remove the button unconditionally to prevent duplicates on subsequent refreshes.
-        frm.remove_custom_button(BUTTON_LABEL);
-
-        // 2. Determine button visibility: Show only on Draft (0) or Submitted (1).
+        // Ensure the button only appears on Draft (0) or Submitted (1) documents
         if (frm.doc.docstatus === 0 || frm.doc.docstatus === 1) {
             
-            frm.add_custom_button(BUTTON_LABEL, () => {
+            // 1. Prevent Duplicates (best practice for 'refresh')
+            frm.remove_custom_button('Print to Warehouse');
+
+            // 2. Add the Custom Button
+            frm.add_custom_button(__('Print to Warehouse'), () => {
                 
                 // Define constant values for the current action
                 const target_printer = 'Brother 3210';
