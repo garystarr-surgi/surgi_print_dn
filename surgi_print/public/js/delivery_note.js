@@ -12,7 +12,7 @@ frappe.ui.form.on('Delivery Note', {
                 const target_printer = 'Brother 3210'; 
                 
                 frappe.call({
-                    method: 'surgi_print_app.api.send_delivery_note_to_cups',
+                    method: 'surgi_print.api.send_delivery_note_to_cups',
                     
                     args: {
                         // *** CRITICAL CORRECTION: Pass the current document's name ***
