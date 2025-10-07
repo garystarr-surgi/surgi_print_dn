@@ -5,7 +5,7 @@ import os
 import tempfile 
 
 @frappe.whitelist()
-def send_delivery_note_to_cups(docname):
+def send_delivery_note_print_to_cups(docname):
     doc = frappe.get_doc("Delivery Note", docname)
     # Example placeholder
     frappe.msgprint(f"Sending {docname} to CUPS printer")
