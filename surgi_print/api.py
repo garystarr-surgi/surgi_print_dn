@@ -5,8 +5,10 @@ import os
 import tempfile 
 
 @frappe.whitelist()
-# *** CORRECTION 1: Accept 'doc_name' from the client ***
-def send_delivery_note_to_cups(doc_name, printer_name): 
+def send_delivery_note_to_cups(docname):
+    doc = frappe.get_doc("Delivery Note", docname)
+    # Example placeholder
+    frappe.msgprint(f"Sending {docname} to CUPS printer")
     """
     Generates a PDF of the specified Delivery Note and sends it to a CUPS printer.
     """
