@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "frappe-vue": "link:../frappe/frappe-vue"
+    // If you explicitly need frappe-vue, check the Frappe repository 
+    // for the correct *published* version to use, or omit this.
+    // Generally, you don't list Frappe's own dependencies here.
   },
   "devDependencies": {
     "eslint": "^8.57.0",
