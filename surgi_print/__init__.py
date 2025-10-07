@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 app_name = "surgi_print"
 
 # The display title shown in the Frappe UI (e.g., in "About" or the sidebar)
-__title__ = "Surgi Print"
+__title__ = "Surgi_Print"
 
 # The current version of your application
 __version__ = "0.0.5" 
