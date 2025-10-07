@@ -1,8 +1,9 @@
 // Client Script attached to the DocType: Delivery Note
-console.log("SURGI PRINT SCRIPT LOADING!");
 
 frappe.ui.form.on('Delivery Note', {
-    refresh(frm) {
+    refresh: function(frm) {
+        frappe.msgprint("✅ delivery_note.js loaded!");
+        
         // --- 1. Define Constants for Consistency and Fix Reference Error ---
         const BUTTON_LABEL = __('Print to Warehouse');
         const PRINTER_NAME = 'Brother 3210';
