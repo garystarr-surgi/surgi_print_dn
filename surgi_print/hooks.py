@@ -22,9 +22,9 @@ doctype_js = {
 
 # Custom Whitelisted Python Modules
 # The `api.py` file contains whitelisted functions and must be included here
-# apis = {
-#   "surgi_print.api": "surgi_print.api"
-#}
+ apis = {
+   "surgi_print.api": "surgi_print.api"
+}
 
 # Python Requirements
 # You must list 'pycups' as a requirement since your code uses it
