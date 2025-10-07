@@ -9,14 +9,14 @@ app_license = "mit"
 # -------------------------------------------
 # Tells Frappe to load 'public/js/delivery_note.js' only when the Delivery Note form is opened.
 doctype_js = {
-	"Delivery Note": "public/js/delivery_note.js"
+	"Delivery Note": "public/js/delivery_note_print.js"
 }
 
 # Client Script Hook (Optional, but good practice for external scripts)
 # This isn't needed if the script is managed via the UI, but it's part of the standard template.
 # doc_events = {
 # 	"Delivery Note": {
-# 		"refresh": "surgi_print.client_scripts.delivery_note.refresh"
+# 		"refresh": "surgi_print.client_scripts.delivery_note_print.refresh"
 # 	}
 # }
 
