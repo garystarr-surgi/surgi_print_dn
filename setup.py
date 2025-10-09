@@ -4,7 +4,7 @@ with open("requirements.txt") as f:
     install_requires = f.read().strip().split("\n")
 
 setup(
-    name="surgi_print",
+    name="surgi_print_dn",
     version="0.0.5",  # <-- make sure this matches __init__.py
     description="CUPS printing for Delivery Note",
     author="Gary Starr",
