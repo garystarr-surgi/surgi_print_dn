@@ -12,7 +12,7 @@ doctype_js = {
 
 # Optional: list Python dependencies
 install_requires = [
-    "pycups"
+    
 ]
 
 # Optional: other Frappe apps required
