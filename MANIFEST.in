@@ -1,11 +1,21 @@
-include *.json
-include *.md
-include *.txt
-include LICENSE
+# Example for a Python setup script using setuptools
+from setuptools import setup, find_packages
 
-recursive-include surgi_print_dn/public *
-recursive-include surgi_print_dn/config *
-recursive-include surgi_print_dn/doctype *
-recursive-include surgi_print_dn/modules.txt
-recursive-include surgi_print_dn/js *
-recursive-include surgi_print_dn/api *
+setup(
+    name='surgi_print_dn',
+    version='0.0.5',
+    packages=find_packages(),
+    include_package_data=True,
+    package_data={
+        'surgi_print_dn': [
+            '*.json',
+            '*.md',
+            '*.txt',
+            '*.toml',
+            '*.cfg',
+            'LICENSE',
+            'public/*',
+            'surgi_print_dn/*'
+        ],
+    },
+)
