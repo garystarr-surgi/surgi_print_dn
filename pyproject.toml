@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 # Basic metadata for the project
-name = "surgi-print-dn" # Use the standard hyphenated name convention
+name = "surgi_print_dn" # Use the standard hyphenated name convention
 description = "A description of the surgi_print application."
 # Set the version dynamically using git tags/commits
 requires-python = ">=3.10"
