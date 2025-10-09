@@ -16,4 +16,4 @@ install_requires = [
 ]
 
 # Optional: other Frappe apps required
-# required_apps = ["erpnext"]
+  required_apps = ["erpnext"]
