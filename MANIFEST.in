@@ -2,6 +2,8 @@ include *.json
 include *.md
 include *.txt
 include LICENSE
+
 recursive-include surgi_print_dn/public *
 recursive-include surgi_print_dn/config *
 recursive-include surgi_print_dn/doctype *
+recursive-include surgi_print_dn/modules.txt
