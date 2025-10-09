@@ -20,7 +20,7 @@ dynamic = ["version"]
 dependencies = [
      "frappe>=15.0.0", # Example Frappe dependency
       "pycups>=2.0.1",
-    # "requests",
+      "requests",
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
