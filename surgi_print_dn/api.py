@@ -20,11 +20,15 @@ def send_delivery_note_print_to_cups(doc_name, printer_name):
         
         # Generate PDF
         pdf_file = frappe.get_print(doctype, doc_name, as_pdf=True)
+
+        # Ensure pdf_file is in bytes
+        if isinstance(pdf_file, str):
+           pdf_file = pdf_file.encode('utf-8')  # Convert string to bytes
         
         # Create temporary file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
-            tmp.write(pdf_file)
-            temp_file_path = tmp.name
+           tmp.write(pdf_file)  # Ensure pdf_file is in bytes
+           temp_file_path = tmp.name
 
         # Connect to CUPS
         conn = cups.Connection(host=server_ip)  # remote server connection
