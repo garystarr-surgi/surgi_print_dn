@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 # The technical name of your app (must match the folder name)
 app_name = "surgi_print_dn"
 
