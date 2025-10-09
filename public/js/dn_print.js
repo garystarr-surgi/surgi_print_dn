@@ -13,7 +13,7 @@ frappe.ui.form.on('Delivery Note', {
                 const doc_name = frm.doc.name;
 
                 frappe.call({
-                    method: 'surgi_print_dn.api.send_delivery_note_print_to_cups',
+                    method: 'surgi_print_dn.api.send_dn_print_to_cups',
                     args: {
                         doc_name: doc_name,
                         printer_name: target_printer
