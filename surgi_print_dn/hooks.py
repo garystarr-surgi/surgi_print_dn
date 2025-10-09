@@ -7,7 +7,7 @@ app_license = "MIT"
 
 # Load JS only for Delivery Note
 doctype_js = {
-    "Delivery Note": "public/js/delivery_note_print.js"
+    "Delivery Note": "public/js/dn_print.js"
 }
 
 # Optional: list Python dependencies
