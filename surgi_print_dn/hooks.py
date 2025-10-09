@@ -12,8 +12,8 @@ doctype_js = {
 
 # Optional: list Python dependencies
 install_requires = [
-    
+    # Add your dependencies here
 ]
 
 # Optional: other Frappe apps required
-  required_apps = ["erpnext"]
+required_apps = ["erpnext"]
