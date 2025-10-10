@@ -24,7 +24,7 @@ dependencies = [
       "requests",
 ]
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "MIT"
 authors = [
   {name = "Gary Starr", email = "gary.starr@surgishop.com"},
 ]
@@ -34,9 +34,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-# [tool.setuptools_scm]
+[tool.setuptools_scm]
 # Configuration for setuptools_scm to manage versioning automatically
-# write_to = "surgi_print_dn/_version.py" # Adjust this path if necessary
+write_to = "surgi_print_dn/_version.py" # Adjust this path if necessary
 
 # Optional: Add configurations for common developer tools below
 #
