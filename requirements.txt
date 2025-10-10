@@ -1,3 +1,4 @@
 frappe>=15.0.0
 erpnext>=15.0.0
 pycups>=2.0.1
+requests
