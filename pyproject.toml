@@ -28,11 +28,11 @@ license = "MIT"
 authors = [
   {name = "Gary Starr", email = "gary.starr@surgishop.com"},
 ]
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License", # Change if needed
-    "Operating System :: OS Independent",
-]
+# classifiers = [
+    # "Programming Language :: Python :: 3",
+    # "License :: OSI Approved :: MIT License", # Change if needed
+    # "Operating System :: OS Independent",
+# ]
 
 [tool.setuptools_scm]
 # Configuration for setuptools_scm to manage versioning automatically
