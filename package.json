@@ -1,9 +1,0 @@
-{
-  "name": "surgi_print_dn",
-  "version": "0.0.5",
-  "description": "Custom Frappe/ERPNext app for surgi_print functionality.",
-  "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  }
-}
