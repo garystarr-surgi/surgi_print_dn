@@ -1,23 +1,4 @@
-# Example for a Python setup script using setuptools
-from setuptools import setup, find_packages
-
-setup(
-    name='surgi_print_dn',
-    version='0.0.5',
-    packages=find_packages(),
-    include_package_data=True,
-    package_data={
-        'surgi_print_dn': [
-            '*.json',
-            '*.md',
-            '*.txt',
-            '*.toml',
-            '*.cfg',
-            'LICENSE',
-            'public/*',
-            'surgi_print_dn/*'
-        ],
-    },
-)
-
-
+include LICENSE
+include README.md
+include requirements.txt
+recursive-include surgi_print_dn/public *
