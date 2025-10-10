@@ -4,8 +4,10 @@ frappe.ui.form.on('Delivery Note', {
         // Show button only on Draft (0) or Submitted (1)
         if (frm.doc.docstatus === 0 || frm.doc.docstatus === 1) {
             
-            // Prevent duplicate buttons
-            frm.remove_custom_button('Print to Warehouse');
+            // Check if the button already exists before removing it
+            if (frm.custom_buttons && frm.custom_buttons['Print to Warehouse']) {
+                frm.remove_custom_button('Print to Warehouse');
+            }
 
             // Add custom button
             frm.add_custom_button(__('Print to Warehouse'), function() {
