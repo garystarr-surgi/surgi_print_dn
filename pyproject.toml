@@ -11,14 +11,17 @@ build-backend = "setuptools.build_meta"
 [project]
 # Basic metadata for the project
 name = "surgi_print_dn" # Use the standard hyphenated name convention
+version = "0.0.5"
 description = "A description of the surgi_print application."
 # Set the version dynamically using git tags/commits
-dynamic = ["version", "requires-python"] 
+requires-python = ">=3.10"
+# dynamic = ["version"] 
 
 # Specify dependencies (add any packages your app needs to run)
 dependencies = [
-    # "frappe>=15.0.0", # Example Frappe dependency
-    # "requests",
+      # "frappe>=15.0.0", # Example Frappe dependency
+      "pycups>=2.0.1",
+      "requests",
 ]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -31,9 +34,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 
-[tool.setuptools_scm]
+# [tool.setuptools_scm]
 # Configuration for setuptools_scm to manage versioning automatically
-write_to = "surgi_print_dn/_version.py" # Adjust this path if necessary
+# write_to = "surgi_print_dn/_version.py" # Adjust this path if necessary
 
 # Optional: Add configurations for common developer tools below
 #
