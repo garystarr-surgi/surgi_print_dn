@@ -47,6 +47,8 @@ def send_dn_print_to_cups(doc_name, printer_name):
         
         # Send to webhook bridge
         frappe.logger().info(f"Sending print job via webhook to {webhook_url}")
+        frappe.logger().info(f"PDF size: {len(pdf_base64)} characters")
+        frappe.logger().info(f"Printer: {printer_name}")
         job_id = send_via_webhook(webhook_url, printer_name, pdf_base64, f"{doctype}: {doc_name}")
         
         frappe.logger().info(f"Webhook print job submitted successfully. Job ID: {job_id}")
