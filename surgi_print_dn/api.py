@@ -12,7 +12,7 @@ def send_dn_print_to_cups(doc_name, printer_name):
     """
     doctype = "Delivery Note"
     server_ip = "47.206.233.222"  # CUPS server IP
-    server_port = 631
+    server_port = 80  # Try port 80 if 631 is blocked
     temp_file_path = None
 
     try:
