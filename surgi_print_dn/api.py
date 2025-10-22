@@ -12,7 +12,7 @@ def send_dn_print_to_cups(doc_name, printer_name):
     """
     doctype = "Delivery Note"
     # Webhook bridge URL (you'll need to set this up)
-    webhook_url = "https://your-ngrok-url.ngrok.io/print"  # Replace with your ngrok URL
+    webhook_url = "https://suzanna-multiplicative-francina.ngrok-free.dev/print"  # Replace with your ngrok URL
     temp_file_path = None
 
     try:
