@@ -104,6 +104,28 @@ def send_via_webhook(webhook_url, printer_name, pdf_base64, job_name):
         frappe.throw(f"Webhook print failed: {e}")
 
 
+# Test method to verify app is updated
+@frappe.whitelist()
+def test_webhook_connection():
+    """
+    Test method to verify the app is updated and webhook is accessible.
+    """
+    try:
+        import requests
+        response = requests.post("https://suzanna-multiplicative-francina.ngrok-free.dev/print", 
+                                json={"printer_name": "Brother_HL-L3210CW_series", "job_name": "Test", "pdf_data": "dGVzdA=="},
+                                timeout=10)
+        return {
+            "success": True,
+            "status_code": response.status_code,
+            "response": response.json()
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
 # Backup method with old name for compatibility
 @frappe.whitelist()
 def send_delivery_note_print_to_cups(doc_name, printer_name):
