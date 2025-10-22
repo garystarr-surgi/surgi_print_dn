@@ -12,7 +12,7 @@ def send_dn_print_to_cups(doc_name, printer_name):
     """
     doctype = "Delivery Note"
     server_ip = "47.206.233.222"  # CUPS server IP
-    server_port = 80  # Try port 80 if 631 is blocked
+    server_port = 443  # Try HTTPS port 443
     temp_file_path = None
 
     try:
@@ -47,28 +47,36 @@ def send_dn_print_to_cups(doc_name, printer_name):
            tmp.write(pdf_file)  # Ensure pdf_file is in bytes
            temp_file_path = tmp.name
 
-        # Connect to CUPS
-        frappe.logger().info(f"Connecting to CUPS server at {server_ip}:{server_port}")
+        # Try multiple ports for Frappe Cloud compatibility
+        ports_to_try = [443, 80, 631]  # HTTPS, HTTP, IPP
+        conn = None
+        job_id = None
         
-        try:
-            conn = cups.Connection(host=server_ip, port=server_port)
-            
-            # Get available printers
-            printers = conn.getPrinters()
-            frappe.logger().info(f"Available printers on CUPS server: {list(printers.keys())}")
-            
-            if printer_name not in printers:
-                frappe.throw(f"Printer '{printer_name}' not found on CUPS server at {server_ip}. Available printers: {', '.join(printers.keys())}")
+        for port in ports_to_try:
+            try:
+                frappe.logger().info(f"Trying CUPS connection on port {port}")
+                conn = cups.Connection(host=server_ip, port=port)
+                
+                # Get available printers
+                printers = conn.getPrinters()
+                frappe.logger().info(f"Available printers on CUPS server: {list(printers.keys())}")
+                
+                if printer_name not in printers:
+                    frappe.throw(f"Printer '{printer_name}' not found on CUPS server at {server_ip}. Available printers: {', '.join(printers.keys())}")
 
-            # Send print job
-            frappe.logger().info(f"Sending print job to printer '{printer_name}'")
-            job_id = conn.printFile(printer_name, temp_file_path, f"{doctype}: {doc_name}", {})
-            
-        except Exception as cups_error:
-            frappe.logger().error(f"CUPS connection failed: {cups_error}")
-            # Fallback: Try HTTP-based printing
-            frappe.logger().info("Attempting HTTP-based print fallback...")
-            job_id = send_via_http_print(server_ip, server_port, printer_name, temp_file_path, f"{doctype}: {doc_name}")
+                # Send print job
+                frappe.logger().info(f"Sending print job to printer '{printer_name}' via port {port}")
+                job_id = conn.printFile(printer_name, temp_file_path, f"{doctype}: {doc_name}", {})
+                frappe.logger().info(f"Successfully connected via port {port}")
+                break
+                
+            except Exception as cups_error:
+                frappe.logger().warning(f"CUPS connection failed on port {port}: {cups_error}")
+                if port == ports_to_try[-1]:  # Last port failed
+                    # Try HTTP fallback
+                    frappe.logger().info("All CUPS ports failed, attempting HTTP-based print fallback...")
+                    job_id = send_via_http_print(server_ip, 80, printer_name, temp_file_path, f"{doctype}: {doc_name}")
+                continue
         
         frappe.logger().info(f"Print job submitted successfully. Job ID: {job_id}")
         return f"Delivery Note {doc_name} sent to printer {printer_name} (Job ID: {job_id})"
@@ -104,31 +112,43 @@ def send_via_http_print(server_ip, server_port, printer_name, file_path, job_nam
         with open(file_path, 'rb') as f:
             pdf_data = f.read()
         
-        # Encode to base64
-        pdf_base64 = base64.b64encode(pdf_data).decode('utf-8')
+        # Try both HTTP and HTTPS
+        protocols = ['https', 'http'] if server_port == 443 else ['http', 'https']
         
-        # Prepare the print job data
-        print_data = {
-            'printer_name': printer_name,
-            'job_name': job_name,
-            'file_data': pdf_base64
-        }
+        for protocol in protocols:
+            try:
+                # Encode to base64
+                pdf_base64 = base64.b64encode(pdf_data).decode('utf-8')
+                
+                # Prepare the print job data
+                print_data = {
+                    'printer_name': printer_name,
+                    'job_name': job_name,
+                    'file_data': pdf_base64
+                }
+                
+                # Send via HTTP/HTTPS POST to CUPS web interface
+                url = f"{protocol}://{server_ip}:{server_port}/printers/{printer_name}"
+                headers = {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'User-Agent': 'Frappe-Surgi-Print/1.0'
+                }
+                
+                frappe.logger().info(f"Trying {protocol.upper()} print via {url}")
+                response = requests.post(url, data=print_data, headers=headers, timeout=30, verify=False)
+                
+                if response.status_code == 200:
+                    frappe.logger().info(f"{protocol.upper()} print job submitted successfully via {url}")
+                    return f"{protocol.upper()}-{response.status_code}"
+                else:
+                    frappe.logger().warning(f"{protocol.upper()} print failed with status {response.status_code}: {response.text}")
+                    
+            except Exception as protocol_error:
+                frappe.logger().warning(f"{protocol.upper()} print attempt failed: {protocol_error}")
+                continue
         
-        # Send via HTTP POST to CUPS web interface
-        url = f"http://{server_ip}:{server_port}/printers/{printer_name}"
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'User-Agent': 'Frappe-Surgi-Print/1.0'
-        }
-        
-        response = requests.post(url, data=print_data, headers=headers, timeout=30)
-        
-        if response.status_code == 200:
-            frappe.logger().info(f"HTTP print job submitted successfully via {url}")
-            return f"HTTP-{response.status_code}"
-        else:
-            frappe.logger().error(f"HTTP print failed with status {response.status_code}: {response.text}")
-            frappe.throw(f"HTTP print failed: {response.status_code} - {response.text}")
+        # If all protocols failed
+        frappe.throw("All HTTP/HTTPS print attempts failed")
             
     except Exception as e:
         frappe.logger().error(f"HTTP print fallback failed: {e}")
