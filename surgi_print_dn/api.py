@@ -25,7 +25,12 @@ def print_delivery_note_via_webhook(doc_name, printer_name):
         
         # Generate PDF
         frappe.logger().info(f"Generating PDF for Delivery Note '{doc_name}'")
-        pdf_file = frappe.get_print(doctype, doc_name, as_pdf=True)
+        try:
+            pdf_file = frappe.get_print(doctype, doc_name, as_pdf=True)
+            frappe.logger().info(f"PDF generated successfully, type: {type(pdf_file)}")
+        except Exception as pdf_error:
+            frappe.logger().error(f"PDF generation failed: {pdf_error}")
+            frappe.throw(f"PDF generation failed: {pdf_error}")
 
         # Ensure pdf_file is in bytes (frappe.get_print returns bytes for PDF)
         if isinstance(pdf_file, str):

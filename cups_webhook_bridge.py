@@ -67,8 +67,18 @@ def print_webhook():
         printer_name = data.get('printer_name', DEFAULT_PRINTER)
         job_name = data.get('job_name', f"Webhook Print {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         
+        # Debug logging
+        logging.info(f"Received print request for printer: {printer_name}")
+        logging.info(f"PDF data length: {len(pdf_base64)} characters")
+        logging.info(f"PDF data preview: {pdf_base64[:100]}...")
+        
         # Decode PDF
-        pdf_data = base64.b64decode(pdf_base64)
+        try:
+            pdf_data = base64.b64decode(pdf_base64)
+            logging.info(f"PDF decoded successfully, size: {len(pdf_data)} bytes")
+        except Exception as decode_error:
+            logging.error(f"PDF decode error: {decode_error}")
+            return jsonify({"error": f"PDF decode failed: {decode_error}"}), 400
         
         # Print
         job_id = print_pdf(pdf_data, printer_name, job_name)
