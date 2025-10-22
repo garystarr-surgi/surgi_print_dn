@@ -1,0 +1,15 @@
+[Unit]
+Description=Surgi Print Webhook Bridge
+After=network.target
+
+[Service]
+Type=simple
+User=gary
+WorkingDirectory=/home/gary/surgi_print_webhook
+ExecStart=/home/gary/surgi_print_webhook/webhook_env/bin/python /home/gary/surgi_print_webhook/cups_webhook_bridge.py
+Restart=always
+RestartSec=10
+Environment=PATH=/home/gary/surgi_print_webhook/webhook_env/bin
+
+[Install]
+WantedBy=multi-user.target

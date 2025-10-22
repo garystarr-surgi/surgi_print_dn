@@ -1,0 +1,15 @@
+[Unit]
+Description=Surgi Print ngrok Tunnel
+After=network.target surgi-print-webhook.service
+Requires=surgi-print-webhook.service
+
+[Service]
+Type=simple
+User=gary
+WorkingDirectory=/home/gary/surgi_print_webhook
+ExecStart=/usr/local/bin/ngrok http 5000
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
