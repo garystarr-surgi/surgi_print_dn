@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 # CUPS Configuration
 CUPS_SERVER = "localhost"  # Local CUPS server
 CUPS_PORT = 631
-DEFAULT_PRINTER = "Brother 3210"
+DEFAULT_PRINTER = "Brother_HL-L3210CW_series"
 
 def print_pdf(pdf_data, printer_name, job_name):
     """Print PDF to local CUPS printer"""

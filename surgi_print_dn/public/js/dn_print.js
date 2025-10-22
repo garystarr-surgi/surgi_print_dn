@@ -11,7 +11,7 @@ frappe.ui.form.on('Delivery Note', {
 
             // Add custom button
             frm.add_custom_button(__('Print to Warehouse'), function() {
-                const target_printer = 'Brother 3210';
+                const target_printer = 'Brother_HL-L3210CW_series';
                 const doc_name = frm.doc.name;
 
                 // Validate document name
