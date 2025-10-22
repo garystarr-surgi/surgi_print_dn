@@ -56,7 +56,21 @@ def health_check():
 def print_webhook():
     """Webhook endpoint for printing"""
     try:
+        # Get raw data first for debugging
+        raw_data = request.get_data()
+        logging.info(f"Raw request data: {raw_data[:200]}...")
+        
+        # Try to get JSON data
         data = request.get_json()
+        if not data:
+            # Try to parse manually if get_json() fails
+            try:
+                import json
+                data = json.loads(raw_data.decode('utf-8'))
+                logging.info("Successfully parsed JSON manually")
+            except Exception as json_error:
+                logging.error(f"JSON parsing failed: {json_error}")
+                return jsonify({"error": f"Invalid JSON: {json_error}"}), 400
         
         # Validate required fields
         if not data or 'pdf_data' not in data:
@@ -92,6 +106,9 @@ def print_webhook():
         
     except Exception as e:
         logging.error(f"Webhook error: {e}")
+        logging.error(f"Error type: {type(e)}")
+        import traceback
+        logging.error(f"Traceback: {traceback.format_exc()}")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/printers', methods=['GET'])
