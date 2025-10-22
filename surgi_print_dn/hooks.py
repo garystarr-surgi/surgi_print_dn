@@ -10,10 +10,22 @@ doctype_js = {
     "Delivery Note": "public/js/dn_print.js"
 }
 
-# Optional: list Python dependencies
+# App configuration
+app_include_css = []
+app_include_js = []
+
+# Python dependencies
 install_requires = [
-    # Add your dependencies here
+    "pycups>=2.0.1",
+    "requests"
 ]
 
-# Optional: other Frappe apps required
+# Required Frappe apps
 required_apps = ["erpnext"]
+
+# App configuration
+app_config = {
+    "cups_server_ip": "47.206.233.1",
+    "cups_server_port": 631,
+    "default_printer": "Brother 3210"
+}

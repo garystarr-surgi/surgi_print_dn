@@ -14,6 +14,16 @@ frappe.ui.form.on('Delivery Note', {
                 const target_printer = 'Brother 3210';
                 const doc_name = frm.doc.name;
 
+                // Validate document name
+                if (!doc_name) {
+                    frappe.msgprint({
+                        title: __('Invalid Document'),
+                        message: 'Please save the document before printing.',
+                        indicator: 'red'
+                    });
+                    return;
+                }
+
                 frappe.call({
                     method: 'surgi_print_dn.api.send_dn_print_to_cups',
                     args: {
@@ -32,12 +42,27 @@ frappe.ui.form.on('Delivery Note', {
                         }
                     },
                     error: function(err) {
+                        let error_message = 'An error occurred during printing. Check server logs.';
+                        
+                        // Try to extract more specific error message
+                        if (err && err.exc && err.exc.length > 0) {
+                            try {
+                                const error_data = JSON.parse(err.exc[0]);
+                                if (error_data.message) {
+                                    error_message = error_data.message;
+                                }
+                            } catch (e) {
+                                // If parsing fails, use the original error message
+                                console.warn("Could not parse error message:", e);
+                            }
+                        }
+                        
                         frappe.msgprint({
                             title: __('Print Failed'),
-                            message: 'An error occurred during printing. Check server logs.',
+                            message: error_message,
                             indicator: 'red'
                         });
-                        console.error("CUPS Print Error Traceback:", err);
+                        console.error("CUPS Print Error:", err);
                     }
                 });
             }).addClass('btn-primary');
