@@ -37,7 +37,6 @@ def print_delivery_note_via_webhook(doc_name, printer_name):
             # If it's a string, it might be base64 encoded or file path
             if pdf_file.startswith('data:'):
                 # Handle data URL format
-                import base64
                 pdf_file = base64.b64decode(pdf_file.split(',')[1])
             else:
                 # Assume it's a file path
@@ -48,7 +47,13 @@ def print_delivery_note_via_webhook(doc_name, printer_name):
             pdf_file = bytes(pdf_file)
         
         # Encode PDF to base64 for webhook
-        pdf_base64 = base64.b64encode(pdf_file).decode('utf-8')
+        try:
+            frappe.logger().info(f"Encoding PDF to base64, PDF type: {type(pdf_file)}, size: {len(pdf_file) if hasattr(pdf_file, '__len__') else 'unknown'}")
+            pdf_base64 = base64.b64encode(pdf_file).decode('utf-8')
+            frappe.logger().info(f"PDF encoded successfully, base64 length: {len(pdf_base64)}")
+        except Exception as encode_error:
+            frappe.logger().error(f"PDF encoding failed: {encode_error}")
+            frappe.throw(f"PDF encoding failed: {encode_error}")
         
         # Send to webhook bridge
         frappe.logger().info(f"Sending print job via webhook to {webhook_url}")
