@@ -83,3 +83,13 @@ def send_dn_print_to_cups(doc_name, printer_name):
     finally:
         if temp_file_path and os.path.exists(temp_file_path):
             os.remove(temp_file_path)
+
+
+# Backup method with old name for compatibility
+@frappe.whitelist()
+def send_delivery_note_print_to_cups(doc_name, printer_name):
+    """
+    Legacy method name for backward compatibility.
+    Calls the main send_dn_print_to_cups function.
+    """
+    return send_dn_print_to_cups(doc_name, printer_name)

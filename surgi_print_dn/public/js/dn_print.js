@@ -24,47 +24,62 @@ frappe.ui.form.on('Delivery Note', {
                     return;
                 }
 
-                frappe.call({
-                    method: 'surgi_print_dn.api.send_dn_print_to_cups',
-                    args: {
-                        doc_name: doc_name,
-                        printer_name: target_printer
-                    },
-                    freeze: true,  // show loading overlay automatically
-                    freeze_message: "Generating PDF and sending to CUPS printer...",
-                    callback: function(r) {
-                        // r.message contains the server return value
-                        if (r.message) {
-                            frappe.show_alert({
-                                message: r.message,
-                                indicator: 'green'
-                            }, 5);
-                        }
-                    },
-                    error: function(err) {
-                        let error_message = 'An error occurred during printing. Check server logs.';
-                        
-                        // Try to extract more specific error message
-                        if (err && err.exc && err.exc.length > 0) {
-                            try {
-                                const error_data = JSON.parse(err.exc[0]);
-                                if (error_data.message) {
-                                    error_message = error_data.message;
-                                }
-                            } catch (e) {
-                                // If parsing fails, use the original error message
-                                console.warn("Could not parse error message:", e);
+                // Try the new method name first, fallback to old name
+                const tryPrint = (methodName) => {
+                    frappe.call({
+                        method: methodName,
+                        args: {
+                            doc_name: doc_name,
+                            printer_name: target_printer
+                        },
+                        freeze: true,  // show loading overlay automatically
+                        freeze_message: "Generating PDF and sending to CUPS printer...",
+                        callback: function(r) {
+                            // r.message contains the server return value
+                            if (r.message) {
+                                frappe.show_alert({
+                                    message: r.message,
+                                    indicator: 'green'
+                                }, 5);
                             }
+                        },
+                        error: function(err) {
+                            // If method not found, try the old method name
+                            if (err && err.exc && err.exc[0] && 
+                                err.exc[0].includes('has no attribute') && 
+                                methodName === 'surgi_print_dn.api.send_dn_print_to_cups') {
+                                console.log("Trying fallback method name...");
+                                tryPrint('surgi_print_dn.api.send_delivery_note_print_to_cups');
+                                return;
+                            }
+                            
+                            let error_message = 'An error occurred during printing. Check server logs.';
+                            
+                            // Try to extract more specific error message
+                            if (err && err.exc && err.exc.length > 0) {
+                                try {
+                                    const error_data = JSON.parse(err.exc[0]);
+                                    if (error_data.message) {
+                                        error_message = error_data.message;
+                                    }
+                                } catch (e) {
+                                    // If parsing fails, use the original error message
+                                    console.warn("Could not parse error message:", e);
+                                }
+                            }
+                            
+                            frappe.msgprint({
+                                title: __('Print Failed'),
+                                message: error_message,
+                                indicator: 'red'
+                            });
+                            console.error("CUPS Print Error:", err);
                         }
-                        
-                        frappe.msgprint({
-                            title: __('Print Failed'),
-                            message: error_message,
-                            indicator: 'red'
-                        });
-                        console.error("CUPS Print Error:", err);
-                    }
-                });
+                    });
+                };
+                
+                // Start with the new method name
+                tryPrint('surgi_print_dn.api.send_dn_print_to_cups');
             }).addClass('btn-primary');
         }
     }
