@@ -6,7 +6,7 @@ import requests
 import base64
 
 @frappe.whitelist()
-def send_dn_print_to_cups(doc_name, printer_name):
+def print_delivery_note_via_webhook(doc_name, printer_name):
     """
     Generates a PDF of the specified Delivery Note and sends it to a CUPS printer.
     """
