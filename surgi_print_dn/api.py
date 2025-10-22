@@ -9,7 +9,7 @@ def send_dn_print_to_cups(doc_name, printer_name):
     Generates a PDF of the specified Delivery Note and sends it to a CUPS printer.
     """
     doctype = "Delivery Note"
-    server_ip = "47.206.233.1"  # CUPS server IP
+    server_ip = "47.206.233.222"  # CUPS server IP
     server_port = 631
     temp_file_path = None
 

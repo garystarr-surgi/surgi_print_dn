@@ -25,7 +25,7 @@ required_apps = ["erpnext"]
 
 # App configuration
 app_config = {
-    "cups_server_ip": "47.206.233.1",
+    "cups_server_ip": "47.206.233.222",
     "cups_server_port": 631,
     "default_printer": "Brother 3210"
 }
