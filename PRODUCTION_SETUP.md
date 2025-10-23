@@ -75,7 +75,7 @@ chmod +x cups_webhook_bridge.py
 ### 2.6 Test Webhook Bridge
 ```bash
 # Test the webhook bridge
-python cups_webhook_bridge.py
+python3 cups_webhook_bridge.py
 ```
 
 You should see:
