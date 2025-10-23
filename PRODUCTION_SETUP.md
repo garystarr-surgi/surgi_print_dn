@@ -59,6 +59,7 @@ source webhook_env/bin/activate
 
 ### 2.4 Install Dependencies
 ```bash
+sudo apt install libcups2-dev
 pip install Flask==2.3.3 pycups==2.0.1 requests==2.31.0
 ```
 
