@@ -108,7 +108,7 @@ ngrok config add-authtoken YOUR_AUTHTOKEN_HERE
 ### 3.3 Test ngrok
 ```bash
 # In one terminal, start webhook bridge
-python cups_webhook_bridge.py
+python3 cups_webhook_bridge.py
 
 # In another terminal, start ngrok
 ngrok http 5000
